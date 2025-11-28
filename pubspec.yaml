@@ -36,6 +36,11 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   geolocator: ^10.1.0
+  # For opening SMS app with pre-filled message
+  url_launcher: ^6.2.1
+  
+  # For sending SMS directly (Android only, requires permissions)
+  flutter_sms: ^2.3.3
 
 dev_dependencies:
   flutter_test:

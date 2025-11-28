@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geolocator/geolocator.dart';
 import 'login_screen.dart';
+import 'package:flutter_sms/flutter_sms.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,6 +13,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String currentLocation = "Press SOS to get location";
+  
+  void _showMessage(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(msg)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +72,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     currentLocation = 
                       "Lat: ${pos.latitude}, Lng: ${pos.longitude}";
                   });
+                    _showMessage('Location fetched: $currentLocation');
 
+                  List<String> recipients = ['01780242355'];
+
+                  try {
+                    String result = await sendSMS(
+                      message: "https://www.google.com/maps?q=${pos.latitude},${pos.longitude}",
+                      recipients: recipients,
+                      sendDirect: true, // Send without opening SMS app
+                    );
+                    _showMessage('SMS sent: $result');
+                  } catch (e) {
+                    _showMessage('Failed to send SMS: $e');
+                  }
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Location Fetched")),
                   );
