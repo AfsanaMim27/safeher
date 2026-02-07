@@ -41,48 +41,48 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyA-FMD0l6HCZHPQBHkJL2SwlwQRRAeGfm8',
-    appId: '1:32673726083:web:adc02a4ea69f66266725b6',
-    messagingSenderId: '32673726083',
-    projectId: 'safeher-284e2',
-    authDomain: 'safeher-284e2.firebaseapp.com',
-    storageBucket: 'safeher-284e2.firebasestorage.app',
-    measurementId: 'G-NLVYWSGC8M',
+    apiKey: 'AIzaSyAW4aB1Uyrmb95rawHWLMVQ0O4T6AfSLR4',
+    appId: '1:282254258843:web:617a6df47c7d5944cdcc3e',
+    messagingSenderId: '282254258843',
+    projectId: 'safeher-ef28d',
+    authDomain: 'safeher-ef28d.firebaseapp.com',
+    storageBucket: 'safeher-ef28d.firebasestorage.app',
+    measurementId: 'G-PYFF4GLQ4H',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDNdQgZrDGGwM49kttZ02NNeaKrYRbjO3w',
-    appId: '1:32673726083:android:808b433fc331a2676725b6',
-    messagingSenderId: '32673726083',
-    projectId: 'safeher-284e2',
-    storageBucket: 'safeher-284e2.firebasestorage.app',
+    apiKey: 'AIzaSyDpGLR5ljGtU9Ej25Ol1hkktZODJs1S398',
+    appId: '1:282254258843:android:69e9ae7551041672cdcc3e',
+    messagingSenderId: '282254258843',
+    projectId: 'safeher-ef28d',
+    storageBucket: 'safeher-ef28d.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAHXLmg4X_51_-wAR6jO9RY1qi9JtsN6Jc',
-    appId: '1:32673726083:ios:827e75bda2d166fa6725b6',
-    messagingSenderId: '32673726083',
-    projectId: 'safeher-284e2',
-    storageBucket: 'safeher-284e2.firebasestorage.app',
+    apiKey: 'AIzaSyBkn4qeNUrzvFln-4-NFHenAotrj0rZryg',
+    appId: '1:282254258843:ios:0a576c045732fa1ecdcc3e',
+    messagingSenderId: '282254258843',
+    projectId: 'safeher-ef28d',
+    storageBucket: 'safeher-ef28d.firebasestorage.app',
     iosBundleId: 'com.example.safeher',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAHXLmg4X_51_-wAR6jO9RY1qi9JtsN6Jc',
-    appId: '1:32673726083:ios:827e75bda2d166fa6725b6',
-    messagingSenderId: '32673726083',
-    projectId: 'safeher-284e2',
-    storageBucket: 'safeher-284e2.firebasestorage.app',
+    apiKey: 'AIzaSyBkn4qeNUrzvFln-4-NFHenAotrj0rZryg',
+    appId: '1:282254258843:ios:0a576c045732fa1ecdcc3e',
+    messagingSenderId: '282254258843',
+    projectId: 'safeher-ef28d',
+    storageBucket: 'safeher-ef28d.firebasestorage.app',
     iosBundleId: 'com.example.safeher',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyA-FMD0l6HCZHPQBHkJL2SwlwQRRAeGfm8',
-    appId: '1:32673726083:web:8501fd53f28c346c6725b6',
-    messagingSenderId: '32673726083',
-    projectId: 'safeher-284e2',
-    authDomain: 'safeher-284e2.firebaseapp.com',
-    storageBucket: 'safeher-284e2.firebasestorage.app',
-    measurementId: 'G-2F5MG6D33J',
+    apiKey: 'AIzaSyAW4aB1Uyrmb95rawHWLMVQ0O4T6AfSLR4',
+    appId: '1:282254258843:web:dbe0a51f528cbb4ccdcc3e',
+    messagingSenderId: '282254258843',
+    projectId: 'safeher-ef28d',
+    authDomain: 'safeher-ef28d.firebaseapp.com',
+    storageBucket: 'safeher-ef28d.firebasestorage.app',
+    measurementId: 'G-EDJE738ECH',
   );
 }

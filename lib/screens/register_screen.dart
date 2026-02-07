@@ -1,68 +1,165 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import '../services/auth_service.dart';
+import 'home_screen.dart';
 import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
+
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final _auth = FirebaseAuth.instance;
-  final email = TextEditingController();
-  final pass = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+
+  String? selectedGender;
   bool loading = false;
 
-  register() async {
-    setState(() => loading = true);
-    try {
-      await _auth.createUserWithEmailAndPassword(
-        email: email.text.trim(),
-        password: pass.text.trim(),
-      );
-      if (mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Registration Successful")));
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (_) => const LoginScreen()));
-      }
-    } on FirebaseAuthException catch (e) {
-      print('Registration Error: $e');
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.message ?? "Error")));
-    }
-    setState(() => loading = false);
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
+      appBar: AppBar(title: const Text('Register')),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          children: [
+            /// NAME (REQUIRED)
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(
+                labelText: 'Name *',
+              ),
+            ),
+            const SizedBox(height: 12),
+
+            /// PHONE (REQUIRED)
+            TextField(
+              controller: phoneController,
+              keyboardType: TextInputType.phone,
+              decoration: const InputDecoration(
+                labelText: 'Emergency Phone *',
+              ),
+            ),
+            const SizedBox(height: 12),
+
+            /// GENDER DROPDOWN
+            DropdownButtonFormField<String>(
+              value: selectedGender,
+              decoration: const InputDecoration(
+                labelText: 'Gender *',
+                border: OutlineInputBorder(),
+              ),
+              items: const [
+                DropdownMenuItem(value: 'male', child: Text('Male')),
+                DropdownMenuItem(value: 'female', child: Text('Female')),
+              ],
+              onChanged: (value) {
+                setState(() => selectedGender = value);
+              },
+            ),
+            const SizedBox(height: 12),
+
+            /// EMAIL
+            TextField(
+              controller: emailController,
+              decoration: const InputDecoration(labelText: 'Email'),
+            ),
+            const SizedBox(height: 12),
+
+            /// PASSWORD
+            TextField(
+              controller: passwordController,
+              obscureText: true,
+              decoration: const InputDecoration(labelText: 'Password'),
+            ),
+            const SizedBox(height: 30),
+
+            /// REGISTER BUTTON
+            ElevatedButton(
+              onPressed: loading
+                  ? null
+                  : () async {
+                /// 🔒 VALIDATIONS
+                if (nameController.text.trim().isEmpty) {
+                  _showError('Name cannot be empty');
+                  return;
+                }
+
+                if (phoneController.text.trim().isEmpty) {
+                  _showError('Phone number cannot be empty');
+                  return;
+                }
+
+                if (selectedGender == null) {
+                  _showError('Please select gender');
+                  return;
+                }
+
+                if (emailController.text.trim().isEmpty ||
+                    passwordController.text.trim().isEmpty) {
+                  _showError('Email and password are required');
+                  return;
+                }
+
+                setState(() => loading = true);
+
+                final result = await AuthService().registerUser(
+                  email: emailController.text.trim(),
+                  password: passwordController.text.trim(),
+                  name: nameController.text.trim(),
+                  phone: phoneController.text.trim(),
+                  gender: selectedGender!,
+                );
+
+                setState(() => loading = false);
+
+                if (result == null) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const HomeScreen(),
+                    ),
+                  );
+                } else {
+                  _showError(result);
+                }
+              },
+              child: loading
+                  ? const CircularProgressIndicator()
+                  : const Text('Register'),
+            ),
+
+            const SizedBox(height: 20),
+
+            /// BACK TO LOGIN
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Create SafeHer Account",
-                    style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 30),
-                TextField(controller: email, decoration: const InputDecoration(labelText: "Email")),
-                TextField(controller: pass, obscureText: true, decoration: const InputDecoration(labelText: "Password")),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: loading ? null : register,
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                  child: Text(loading ? "Please wait..." : "Register"),
-                ),
+                const Text('Already have an account? '),
                 TextButton(
-                  onPressed: () => Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (_) => const LoginScreen())),
-                  child: const Text("Already have an account? Login"),
-                )
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const LoginScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text('Login'),
+                ),
               ],
             ),
-          ),
+          ],
         ),
       ),
     );
